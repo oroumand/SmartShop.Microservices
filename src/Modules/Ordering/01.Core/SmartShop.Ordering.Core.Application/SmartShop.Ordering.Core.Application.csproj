@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\BuildingBlocks\SmartShop.ModuleContracts\SmartShop.ModuleContracts.csproj" />
+    <ProjectReference Include="..\SmartShop.Ordering.Core.Domain\SmartShop.Ordering.Core.Domain.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

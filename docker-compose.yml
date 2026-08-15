@@ -1,0 +1,75 @@
+name: smartshop-microservices-workshop
+
+services:
+  rabbitmq:
+    image: rabbitmq:4.1-management
+    environment:
+      RABBITMQ_DEFAULT_USER: "${SMARTSHOP_RABBITMQ_USER:-smartshop}"
+      RABBITMQ_DEFAULT_PASS: "${SMARTSHOP_RABBITMQ_PASSWORD:-smartshop_local_123}"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "${SMARTSHOP_SQL_PASSWORD:-SmartShop_local_123!}"
+    ports:
+      - "1433:1433"
+    volumes:
+      - smartshop-sql:/var/opt/mssql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$${MSSQL_SA_PASSWORD}" -Q "SELECT 1" -C -b || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  smartshop-api:
+    build:
+      context: .
+      dockerfile: src/SmartShop.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__SmartShopDb: Server=sqlserver;Database=SmartShop;User Id=sa;Password=${SMARTSHOP_SQL_PASSWORD:-SmartShop_local_123!};TrustServerCertificate=True
+      RabbitMq__HostName: rabbitmq
+      RabbitMq__UserName: "${SMARTSHOP_RABBITMQ_USER:-smartshop}"
+      RabbitMq__Password: "${SMARTSHOP_RABBITMQ_PASSWORD:-smartshop_local_123}"
+    ports:
+      - "8080:8080"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  loyalty-api:
+    build:
+      context: .
+      dockerfile: src/Services/Loyalty/SmartShop.Loyalty.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__LoyaltyDb: Server=sqlserver;Database=SmartShopLoyalty;User Id=sa;Password=${SMARTSHOP_SQL_PASSWORD:-SmartShop_local_123!};TrustServerCertificate=True
+      RabbitMq__HostName: rabbitmq
+      RabbitMq__UserName: "${SMARTSHOP_RABBITMQ_USER:-smartshop}"
+      RabbitMq__Password: "${SMARTSHOP_RABBITMQ_PASSWORD:-smartshop_local_123}"
+    ports:
+      - "8081:8080"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+volumes:
+  smartshop-sql:
