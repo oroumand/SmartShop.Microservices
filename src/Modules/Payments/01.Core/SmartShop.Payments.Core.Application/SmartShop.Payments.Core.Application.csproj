@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\BuildingBlocks\SmartShop.IntegrationEvents\SmartShop.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\..\..\..\BuildingBlocks\SmartShop.ModuleContracts\SmartShop.ModuleContracts.csproj" />
+    <ProjectReference Include="..\SmartShop.Payments.Core.Domain\SmartShop.Payments.Core.Domain.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

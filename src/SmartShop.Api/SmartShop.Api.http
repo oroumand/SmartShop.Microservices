@@ -1,0 +1,5 @@
+@SmartShop.Api_HostAddress = http://localhost:5217
+
+GET {{SmartShop.Api_HostAddress}}/health
+
+###

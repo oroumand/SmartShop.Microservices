@@ -1,0 +1,29 @@
+# .NET
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# Test results
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# Build artifacts
+artifacts/
+publish/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Docker / local
+docker-data/

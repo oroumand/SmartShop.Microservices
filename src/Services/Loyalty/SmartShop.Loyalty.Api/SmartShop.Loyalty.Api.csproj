@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\SmartShop.IntegrationEvents\SmartShop.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\SmartShop.Messaging.RabbitMq\SmartShop.Messaging.RabbitMq.csproj" />
+    <ProjectReference Include="..\SmartShop.Loyalty.Core.Application\SmartShop.Loyalty.Core.Application.csproj" />
+    <ProjectReference Include="..\SmartShop.Loyalty.Infra.Data\SmartShop.Loyalty.Infra.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="10.0.5" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.14.14" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseAppHost>false</UseAppHost>
+  </PropertyGroup>
+
+</Project>
