@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SmartShop.Ordering.Infra.Data.Migrations
 {
-    [DbContext(typeof(OrderingDbContext))]
+    [DbContext(typeof(SmartShop.Ordering.Infra.Data.OrderingDbContext))]
     [Migration("20260815130000_AddPaymentId")]
     public partial class AddPaymentId : Migration
     {
