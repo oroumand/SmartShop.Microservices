@@ -1,7 +1,7 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 
-const BASE_URL = __ENV.BASE_URL || 'http://localhost:5217';
+const BASE_URL = __ENV.BASE_URL || 'http://localhost:8088';
 
 export const options = {
   vus: 1,
@@ -13,7 +13,7 @@ export const options = {
 };
 
 export default function () {
-  const health = http.get(`${BASE_URL}/health`);
+  const health = http.get(`${BASE_URL}/health/live`);
   check(health, {
     'health returns 200': (response) => response.status === 200,
   });

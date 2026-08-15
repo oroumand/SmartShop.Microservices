@@ -10,13 +10,13 @@
 
 ```bash
 k6 run perf/k6/smoke.js
-k6 run -e BASE_URL=http://localhost:5217 perf/k6/order-payment-flow.js
+k6 run -e BASE_URL=http://localhost:8088 perf/k6/order-payment-flow.js
 ```
 
 اگر `BASE_URL` مشخص نشود، مقدار پیش‌فرض اسکریپت‌ها این است:
 
 ```text
-http://localhost:5217
+http://localhost:8088
 ```
 
 ## فایل‌ها
@@ -27,7 +27,7 @@ http://localhost:5217
 
 این اسکریپت endpointهای زیر را صدا می‌زند:
 
-- `GET /health`
+- `GET /health/live`
 - `GET /api/catalog/products`
 - `GET /api/orders`
 - `GET /api/payments`

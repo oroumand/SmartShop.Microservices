@@ -67,7 +67,7 @@ docker compose config --quiet
 
 - تصمیم‌های معماری: [`docs/adr`](docs/adr)
 - تنظیمات: [`docs/configuration.md`](docs/configuration.md)
-- راه‌اندازی runtime: [`docs/runtime-setup.md`](docs/runtime-setup.md)
+- راه‌اندازی runtime: [`docs/operations-runbook.md`](docs/operations-runbook.md)
 - مرز قابلیت‌ها: [`docs/module-boundaries.md`](docs/module-boundaries.md)
 
 ## Checkpoint tags

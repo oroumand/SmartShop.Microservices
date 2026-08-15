@@ -1,7 +1,7 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 
-const BASE_URL = __ENV.BASE_URL || 'http://localhost:5217';
+const BASE_URL = __ENV.BASE_URL || 'http://localhost:8088';
 
 export const options = {
   stages: [
@@ -93,7 +93,7 @@ export default function () {
 
   const paymentPayload = JSON.stringify({
     orderId,
-    method: 'Card',
+    method: 'FakeGateway',
   });
 
   const createPaymentResponse = http.post(`${BASE_URL}/api/payments`, paymentPayload, jsonHeaders);
@@ -102,15 +102,20 @@ export default function () {
     'payment creation returns 200 or 201': (response) => response.status === 200 || response.status === 201,
   });
 
-  sleep(1);
-
-  const finalOrderResponse = http.get(`${BASE_URL}/api/orders/${orderId}`);
-  const finalOrder = parseJson(finalOrderResponse);
-  const finalStatus = property(finalOrder, 'status');
+  let finalOrderResponse;
+  let finalStatus;
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    sleep(0.2);
+    finalOrderResponse = http.get(`${BASE_URL}/api/orders/${orderId}`);
+    finalStatus = property(parseJson(finalOrderResponse), 'status');
+    if (String(finalStatus).toLowerCase() === 'paid') {
+      break;
+    }
+  }
 
   check(finalOrderResponse, {
     'final order request returns 200': (response) => response.status === 200,
-    'final order is paid when status is present': () => !finalStatus || String(finalStatus).toLowerCase() === 'paid',
+    'final order eventually becomes paid': () => String(finalStatus).toLowerCase() === 'paid',
   });
 
   sleep(1);
