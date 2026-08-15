@@ -2,13 +2,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BuildingBlocks\SmartShop.Messaging.RabbitMq\SmartShop.Messaging.RabbitMq.csproj" />
+    <ProjectReference Include="..\BuildingBlocks\SmartShop.Web\SmartShop.Web.csproj" />
     <ProjectReference Include="..\Modules\AiSearch\01.Core\SmartShop.AiSearch.Core.Application\SmartShop.AiSearch.Core.Application.csproj" />
     <ProjectReference Include="..\Modules\Catalog\02.Infra\SmartShop.Catalog.Infra.Data\SmartShop.Catalog.Infra.Data.csproj" />
     <ProjectReference Include="..\Modules\Catalog\03.Endpoints\SmartShop.Catalog.Endpoints\SmartShop.Catalog.Endpoints.csproj" />
     <ProjectReference Include="..\Modules\Ordering\02.Infra\SmartShop.Ordering.Infra.Data\SmartShop.Ordering.Infra.Data.csproj" />
     <ProjectReference Include="..\Modules\Ordering\03.Endpoints\SmartShop.Ordering.Endpoints\SmartShop.Ordering.Endpoints.csproj" />
-    <ProjectReference Include="..\Modules\Payments\02.Infra\SmartShop.Payments.Infra.Data\SmartShop.Payments.Infra.Data.csproj" />
-    <ProjectReference Include="..\Modules\Payments\03.Endpoints\SmartShop.Payments.Endpoints\SmartShop.Payments.Endpoints.csproj" />
     <ProjectReference Include="..\Modules\AiSearch\02.Infra\SmartShop.AiSearch.Infra.Data\SmartShop.AiSearch.Infra.Data.csproj" />
     <ProjectReference Include="..\Modules\AiSearch\02.Infra\SmartShop.AiSearch.Infra.OpenAI\SmartShop.AiSearch.Infra.OpenAI.csproj" />
     <ProjectReference Include="..\Modules\AiSearch\02.Infra\SmartShop.AiSearch.Infra.Qdrant\SmartShop.AiSearch.Infra.Qdrant.csproj" />
@@ -17,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="10.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

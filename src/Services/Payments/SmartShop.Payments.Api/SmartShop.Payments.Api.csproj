@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\SmartShop.Messaging.RabbitMq\SmartShop.Messaging.RabbitMq.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\SmartShop.ModuleContracts\SmartShop.ModuleContracts.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\SmartShop.Web\SmartShop.Web.csproj" />
+    <ProjectReference Include="..\..\..\Modules\Payments\02.Infra\SmartShop.Payments.Infra.Data\SmartShop.Payments.Infra.Data.csproj" />
+    <ProjectReference Include="..\..\..\Modules\Payments\03.Endpoints\SmartShop.Payments.Endpoints\SmartShop.Payments.Endpoints.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="10.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="10.0.0" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.14.14" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseAppHost>false</UseAppHost>
+  </PropertyGroup>
+
+</Project>

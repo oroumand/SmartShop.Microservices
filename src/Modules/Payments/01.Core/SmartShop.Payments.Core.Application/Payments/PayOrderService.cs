@@ -47,7 +47,6 @@ public sealed class PayOrderService(
         payment.MarkAsSucceeded();
 
         await paymentRepository.AddAsync(payment, cancellationToken);
-        await orderingPaymentContract.MarkOrderAsPaidAsync(order.OrderId, payment.Id, cancellationToken);
         outbox.Enqueue(
             RabbitMqEventNames.PaymentSucceededV1,
             new PaymentSucceededV1(

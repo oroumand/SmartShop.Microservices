@@ -4,6 +4,7 @@ using SmartShop.Loyalty.Api;
 using SmartShop.Loyalty.Api.Consumers;
 using SmartShop.Loyalty.Infra.Data;
 using SmartShop.Messaging.RabbitMq;
+using SmartShop.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddHealthChecks()
     .AddDbContextCheck<LoyaltyDbContext>("loyalty-database");
 
 var app = builder.Build();
+
+app.UseCorrelationId();
 
 using (var scope = app.Services.CreateScope())
 {

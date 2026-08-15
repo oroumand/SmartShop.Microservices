@@ -50,6 +50,10 @@ public sealed class PaymentOutboxPublisher(
                     cancellationToken);
 
                 message.MarkProcessed();
+                logger.LogInformation(
+                    "Published outbox message {MessageId} with routing key {RoutingKey}.",
+                    message.Id,
+                    message.RoutingKey);
             }
             catch (Exception exception)
             {

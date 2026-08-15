@@ -15,9 +15,9 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("SmartShopDb")
+        var connectionString = configuration.GetConnectionString("PaymentsDb")
             ?? throw new InvalidOperationException(
-                "Connection string 'SmartShopDb' was not found.");
+                "Connection string 'PaymentsDb' was not found.");
 
         services.AddDbContext<PaymentsDbContext>(options =>
             options.UseSqlServer(connectionString));

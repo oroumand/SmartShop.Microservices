@@ -24,6 +24,7 @@ public static class DependencyInjection
         services.AddScoped<IOrderRepository, EfOrderRepository>();
         services.AddScoped<IOrderCommandService, CreateOrderService>();
         services.AddScoped<IOrderQueryService, EfOrderQueryService>();
+        services.AddScoped<IApplySuccessfulPaymentService, EfApplySuccessfulPaymentService>();
         services.AddScoped<IOrderingPaymentContract, EfOrderingPaymentContract>();
         services.AddScoped<OrderingDatabaseInitializer>();
 

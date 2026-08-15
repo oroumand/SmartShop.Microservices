@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Scalar.AspNetCore;
 using SmartShop.AiSearch.Core.Application.Search;
 using SmartShop.AiSearch.Endpoints;
@@ -8,24 +9,28 @@ using SmartShop.Catalog.Infra.Data;
 using SmartShop.Ordering.Endpoints;
 using SmartShop.Ordering.Infra.Data;
 using SmartShop.Ordering.Infra.Data.Database;
-using SmartShop.Payments.Endpoints;
-using SmartShop.Payments.Infra.Data;
-using SmartShop.Payments.Infra.Data.Database;
 using SmartShop.Messaging.RabbitMq;
+using SmartShop.Api.Consumers;
+using SmartShop.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 builder.Services.AddCatalogData(builder.Configuration);
 builder.Services.AddOrderingData(builder.Configuration);
-builder.Services.AddPaymentsData(builder.Configuration);
 builder.Services.AddRabbitMqPublisher(builder.Configuration, "smartshop-monolith");
+builder.Services.AddHostedService<OrderingPaymentSucceededConsumer>();
 builder.Services.AddOpenAiEmbeddings(builder.Configuration);
 builder.Services.AddQdrantVectorStore(builder.Configuration);
 builder.Services.AddScoped<IAiSearchIndexingService, AiSearchIndexingService>();
 builder.Services.AddScoped<IAiSearchQueryService, AiSearchQueryService>();
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<CatalogDbContext>("catalog-database")
+    .AddDbContextCheck<OrderingDbContext>("ordering-database");
 
 var app = builder.Build();
+
+app.UseCorrelationId();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -38,11 +43,6 @@ using (var scope = app.Services.CreateScope())
         scope.ServiceProvider.GetRequiredService<OrderingDatabaseInitializer>();
 
     await orderingDatabaseInitializer.InitializeAsync();
-
-    var paymentsDatabaseInitializer =
-        scope.ServiceProvider.GetRequiredService<PaymentsDatabaseInitializer>();
-
-    await paymentsDatabaseInitializer.InitializeAsync();
 }
 
 if (app.Environment.IsDevelopment())
@@ -54,10 +54,13 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.MapGet("/health", () => "OK");
+app.MapHealthChecks("/health/live", new HealthCheckOptions
+{
+    Predicate = _ => false
+});
+app.MapHealthChecks("/health/ready");
 app.MapCatalogEndpoints();
 app.MapOrderingEndpoints();
-app.MapPaymentsEndpoints();
 app.MapAiSearchEndpoints();
 
 app.Run();

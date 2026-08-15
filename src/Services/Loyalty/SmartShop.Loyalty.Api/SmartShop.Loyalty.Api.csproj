@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\SmartShop.IntegrationEvents\SmartShop.IntegrationEvents.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\SmartShop.Messaging.RabbitMq\SmartShop.Messaging.RabbitMq.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\SmartShop.Web\SmartShop.Web.csproj" />
     <ProjectReference Include="..\SmartShop.Loyalty.Core.Application\SmartShop.Loyalty.Core.Application.csproj" />
     <ProjectReference Include="..\SmartShop.Loyalty.Infra.Data\SmartShop.Loyalty.Infra.Data.csproj" />
   </ItemGroup>

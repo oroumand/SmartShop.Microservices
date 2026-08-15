@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using SmartShop.Ordering.Core.Application.Orders;
+using SmartShop.ModuleContracts.Ordering;
 
 namespace SmartShop.Ordering.Endpoints;
 
@@ -60,6 +61,23 @@ public static class OrderingEndpoints
         })
             .WithName("CreateOrder")
             .WithSummary("Create an order from active catalog products.");
+
+        endpoints.MapGet("/internal/orders/{id:guid}/payment-info", async (
+            Guid id,
+            IOrderingPaymentContract paymentContract,
+            CancellationToken cancellationToken) =>
+        {
+            var order = await paymentContract.GetOrderForPaymentAsync(
+                id,
+                cancellationToken);
+
+            return order is null
+                ? Results.NotFound()
+                : Results.Ok(order);
+        })
+            .WithName("GetOrderPaymentInfo")
+            .WithTags("Ordering/Internal")
+            .WithSummary("Internal payment projection for the Payments service.");
 
         return endpoints;
     }

@@ -48,20 +48,34 @@ public sealed class Order
 
     public OrderStatus Status { get; private set; }
 
+    public Guid? PaymentId { get; private set; }
+
     public DateTime CreatedAtUtc { get; private set; }
 
     public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
 
     public decimal TotalAmount => _items.Sum(item => item.LineTotal);
 
-    public void MarkAsPaid()
+    public bool ApplySuccessfulPayment(Guid paymentId)
     {
+        if (paymentId == Guid.Empty)
+        {
+            throw new ArgumentException("Payment id is required.", nameof(paymentId));
+        }
+
+        if (Status == OrderStatus.Paid && PaymentId == paymentId)
+        {
+            return false;
+        }
+
         if (Status != OrderStatus.Pending)
         {
             throw new InvalidOperationException("Only pending orders can be marked as paid.");
         }
 
         Status = OrderStatus.Paid;
+        PaymentId = paymentId;
+        return true;
     }
 
     private static string RequireValue(string value, string parameterName)

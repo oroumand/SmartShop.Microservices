@@ -1,0 +1,9 @@
+@PaymentsApi = http://localhost:5222
+
+GET {{PaymentsApi}}/health/ready
+Accept: application/json
+
+###
+
+GET {{PaymentsApi}}/api/payments
+Accept: application/json

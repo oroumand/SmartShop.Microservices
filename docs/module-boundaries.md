@@ -100,7 +100,7 @@ ModuleName/
 
 - جزئیات آیتم‌های سفارش
 - اطلاعات محصول
-- درگاه پرداخت واقعی در نسخه کارگاهی
+- درگاه پرداخت واقعی در نسخه فعلی
 
 ### قابلیت‌های عمومی
 
@@ -207,13 +207,15 @@ SharedKernel -> Any Module
 
 ## مرز دیتابیس
 
-برای سادگی کارگاه، همه ماژول‌ها از یک SQL Server Database استفاده می‌کنند، اما هر ماژول schema خودش را دارد.
+ماژول‌های باقی‌مانده در `SmartShop.Api` از database اصلی با schemaهای جدا استفاده می‌کنند. سرویس‌های استخراج‌شده Payments و Loyalty مالک database مستقل خود هستند.
 
 ```text
 catalog
 ordering
 payment
 ai
+SmartShopPayments
+SmartShopLoyalty
 ```
 
 این تصمیم باعث می‌شود سیستم ساده بماند، اما ownership داده‌ها برای هر ماژول مشخص باشد.

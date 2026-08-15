@@ -13,7 +13,7 @@ export const options = {
 };
 
 export default function () {
-  // This script is for a later workshop step.
+  // This script validates the optional AI search integration.
   // It requires Qdrant to be running and OpenAI configuration to be valid.
   // Until those dependencies are configured, these checks are expected to fail.
   const reindexResponse = http.post(`${BASE_URL}/api/ai-search/reindex`);

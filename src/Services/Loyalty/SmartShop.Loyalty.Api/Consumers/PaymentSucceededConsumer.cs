@@ -104,6 +104,10 @@ public sealed class PaymentSucceededConsumer(
                     message.OccurredAtUtc));
 
             await channel.BasicAckAsync(delivery.DeliveryTag, multiple: false);
+            logger.LogInformation(
+                "Applied payment event {EventId} for payment {PaymentId} to Loyalty.",
+                message.EventId,
+                message.PaymentId);
         }
         catch (Exception exception)
         {

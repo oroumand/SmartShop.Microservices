@@ -1,0 +1,12 @@
+@Gateway = http://localhost:8088
+
+GET {{Gateway}}/health/live
+
+### Catalog stays in the monolith
+GET {{Gateway}}/api/products
+
+### Payments is routed to the extracted service
+GET {{Gateway}}/api/payments
+
+### Loyalty is routed to the new service
+GET {{Gateway}}/api/loyalty/customers/00000000-0000-0000-0000-000000000001

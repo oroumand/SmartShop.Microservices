@@ -24,27 +24,4 @@ public sealed class EfOrderingPaymentContract(OrderingDbContext dbContext) : IOr
                 order.Status.ToString(),
                 order.Status == OrderStatus.Pending);
     }
-
-    public async Task MarkOrderAsPaidAsync(
-        Guid orderId,
-        Guid paymentId,
-        CancellationToken cancellationToken = default)
-    {
-        if (paymentId == Guid.Empty)
-        {
-            throw new ArgumentException("Payment id is required.", nameof(paymentId));
-        }
-
-        var order = await dbContext.Orders
-            .SingleOrDefaultAsync(order => order.Id == orderId, cancellationToken);
-
-        if (order is null)
-        {
-            throw new InvalidOperationException($"Order '{orderId}' was not found.");
-        }
-
-        order.MarkAsPaid();
-
-        await dbContext.SaveChangesAsync(cancellationToken);
-    }
 }

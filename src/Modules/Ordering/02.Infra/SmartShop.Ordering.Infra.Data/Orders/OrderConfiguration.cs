@@ -28,6 +28,12 @@ public sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
             .HasMaxLength(50)
             .IsRequired();
 
+        builder.Property(order => order.PaymentId);
+
+        builder.HasIndex(order => order.PaymentId)
+            .IsUnique()
+            .HasFilter("[PaymentId] IS NOT NULL");
+
         builder.Property(order => order.CreatedAtUtc)
             .IsRequired();
 
