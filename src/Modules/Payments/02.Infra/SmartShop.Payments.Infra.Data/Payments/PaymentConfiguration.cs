@@ -15,6 +15,9 @@ public sealed class PaymentConfiguration : IEntityTypeConfiguration<Payment>
         builder.Property(payment => payment.OrderId)
             .IsRequired();
 
+        builder.HasIndex(payment => payment.OrderId)
+            .IsUnique();
+
         builder.Property(payment => payment.Amount)
             .HasPrecision(18, 2)
             .IsRequired();

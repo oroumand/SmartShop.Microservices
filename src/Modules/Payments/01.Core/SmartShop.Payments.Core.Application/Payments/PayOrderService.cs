@@ -24,6 +24,12 @@ public sealed class PayOrderService(
             throw new ArgumentException("Payment method is invalid.", nameof(request));
         }
 
+        if (await paymentRepository.ExistsForOrderAsync(request.OrderId, cancellationToken))
+        {
+            throw new InvalidOperationException(
+                $"Order '{request.OrderId}' already has a payment.");
+        }
+
         var order = await orderingPaymentContract.GetOrderForPaymentAsync(
             request.OrderId,
             cancellationToken);
